@@ -2,7 +2,7 @@ __author__ = "Hiren Vadher"
 __version__ = "1.0.1"
 __email__ = "hirenvadher954@gmail.com"
 
-from flask import Flask, jsonify
+from flask import Flask
 from datetime import date
 import requests
 from flask_cors import CORS
