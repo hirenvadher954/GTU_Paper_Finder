@@ -1,4 +1,3 @@
-
 from flask import Flask
 from datetime import date
 import requests
