@@ -11,9 +11,9 @@ from concurrent.futures import ThreadPoolExecutor
 import redis
 
 app = Flask(__name__)
-rd = redis.Redis(host='localhost',
-                 port=6379,
-                 db=0)
+# rd = redis.Redis(host='localhost',
+#                  port=6379,
+#                  db=0)
 
 CORS(app, resources={r"*": {"origins": "*"}})
 
@@ -29,21 +29,21 @@ def index():
 
 @app.route('/<field>/<subject_code>')
 def find_valid_paper(field: str, subject_code: str) -> json:
-    if rd.get(subject_code):
-        return rd.get(subject_code)
-    else:
-        for year in year_list:
-            get_paper_link(field, subject_code, year, "S")
-            get_paper_link(field, subject_code, year, "W")
-        get_paper_status()
-        array = [{'year': i, 'paperLink': paper[i]} for i in paper]
-        store(array, subject_code)
+    # if rd.get(subject_code):
+    #     return rd.get(subject_code)
+    # else:
+    for year in year_list:
+        get_paper_link(field, subject_code, year, "S")
+        get_paper_link(field, subject_code, year, "W")
+    get_paper_status()
+    array = [{'year': i, 'paperLink': paper[i]} for i in paper]
+    # store(array, subject_code)
     return json.dumps(array)
 
 
-def store(array, subject_code):
-    rd.set(subject_code, json.dumps(array))
-    return rd.expire(subject_code, 3600)
+# def store(array, subject_code):
+#     rd.set(subject_code, json.dumps(array))
+#     return rd.expire(subject_code, 3600)
 
 
 def get_url(url: str):
