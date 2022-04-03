@@ -2,7 +2,6 @@ __author__ = "Hiren Vadher"
 __version__ = "1.0.1"
 __email__ = "hirenvadher954@gmail.com"
 
-
 from flask import Flask
 from datetime import date
 import requests
@@ -21,6 +20,11 @@ CORS(app, resources={r"*": {"origins": "*"}})
 paper: dict[str, str] = {}
 list_of_urls: list[str] = []
 year_list: range = range(2016, date.today().year)
+
+
+@app.route("/")
+def index():
+    return "Hello this is the new version!"
 
 
 @app.route('/<field>/<subject_code>')
