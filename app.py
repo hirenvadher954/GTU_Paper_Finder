@@ -1,8 +1,3 @@
-__author__ = "Hiren Vadher"
-__version__ = "1.0.1"
-__email__ = "hirenvadher954@gmail.com"
-
-from typing import Dict, Any, List
 
 from flask import Flask
 from datetime import date
@@ -46,7 +41,7 @@ def store(array, subject_code):
 def get_url(url: str):
     """
     It sends get request to a specified url.
-    :param url: 
+    :param url: Url is going to be in this format - https://www.gtu.ac.in/uploads/W2018/BE/3110013.pdf
     :return requests.Response:
     """
     return requests.get(url)
@@ -67,10 +62,10 @@ def get_paper_status():
 
 def get_paper_link(field, subject_code, year, summer_or_winter):
     """
-    :param field:
-    :param subject_code:
-    :param year:
-    :param summer_or_winter:
+    :param field: BE(Engineering) or DE(Diploma)
+    :param subject_code: E.g - 3110013
+    :param year: It should be greate than 2015
+    :param summer_or_winter: S or W Options indicate whether paper is from summer or winter
 
     It will return paper link E.g - https://www.gtu.ac.in/uploads/W2018/BE/3110013.pdf
     """
