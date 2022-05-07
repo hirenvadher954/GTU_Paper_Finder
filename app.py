@@ -1,13 +1,13 @@
 __author__ = "Hiren Vadher"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __email__ = "hirenvadher954@gmail.com"
 
-from flask import Flask
-from datetime import date
-import requests
-from flask_cors import CORS
-import json
 from concurrent.futures import ThreadPoolExecutor
+from datetime import date
+from flask_cors import CORS
+from flask import Flask
+import json
+import requests
 import redis
 
 app = Flask(__name__)
@@ -29,6 +29,10 @@ def index():
 
 @app.route('/<field>/<subject_code>')
 def find_valid_paper(field: str, subject_code: str) -> json:
+    """
+    Temporarily commented Redis code because the present code is hosted on Heroku, which does not allow free use of
+    Redis.
+    """
     # if rd.get(subject_code):
     #     return rd.get(subject_code)
     # else:
@@ -63,9 +67,9 @@ def get_paper_status():
     """
     with ThreadPoolExecutor(max_workers=10) as pool:
         response_list = list(pool.map(get_url, list_of_urls))
-    for index in range(len(response_list)):
-        if response_list[index].status_code == 200:
-            paper[str(year_list[index // 2]) + "-" + get_full_name(index)] = list_of_urls[index]
+    for i in range(len(response_list)):
+        if response_list[i].status_code == 200:
+            paper[str(year_list[i // 2]) + "-" + get_full_name(i)] = list_of_urls[i]
 
 
 def get_paper_link(field, subject_code, year, summer_or_winter):
@@ -83,13 +87,13 @@ def get_paper_link(field, subject_code, year, summer_or_winter):
     #     paper[str(year) + "-" + get_full_name(summer_or_winter)] = paper_link
 
 
-def get_full_name(index):
+def get_full_name(i):
     """
     Decide whether the paper is Summer or Winter
-    :param index:
+    :param i: index
     :return :
     """
-    if list_of_urls[index][30] == "S":
+    if list_of_urls[i][30] == "S":
         return "Summer"
     return "Winter"
 
